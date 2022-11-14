@@ -1,0 +1,14 @@
+Example file content.
+0007000000055153
+0007000000056783
+0007000000056884
+0007000000056941
+0007000000055276
+0007000000056873
+
+To add single quoation in the beginning of each line and a single quoation in the end including comma:
+# sed -E "s/^/'/;s/\r?$/',/" file
+Or
+# sed -E "s/^([0-9]+)\r?$/'\1',/" ttt.txt
+
+NOTE: This works for MS notepad file with \r as linebreak and last line with \n as line break (thus the \r? in the regex).
