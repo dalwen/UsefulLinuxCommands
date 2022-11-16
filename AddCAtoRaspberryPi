@@ -1,0 +1,30 @@
+CA certificates are located in /etc/ssl/certs as well as /usr/share/ca-certificates/ and in some cases /usr/local/share/certificates.
+
+In general CA certs should not be manually added to the local trust store. There are reasons why certain CAs are not included. Without further research, it's unclear why this particular CA root cert was not included in Raspbian. It seems to be included in my Debian 'Buster' installation running Brave Browser.
+
+All trusted CA certificates are added to a main trust store at etc/ssl/certs/ca-certificates.crt. The main trust store is updated through either through:
+
+# update-ca-certificates
+or reconfiguring the ca-certificates package using:
+
+# dpkg-reconfigure ca-certificates
+
+Procedure to add CA Certificates Manually
+
+Create a local cert directory:
+
+mkdir /usr/share/ca-certificates/local
+Download the CA cert:
+
+cd /usr/share/ca-certificates/local
+wget https://entrust.com/root-certificates/entrust_l1k.cer
+Reformat the certificate into PEM:
+
+openssl x509 -inform PEM  -in entrust_l1k.cer -outform PEM -out entrust_l1k.crt
+Reconfigure the ca-certificates package:
+
+dpkg-reconfigure ca-certificates
+When prompted for what do to with new certificates, choose ask. And then select the entrust_l1k.crt with space.
+
+openssl s_client -connect www.philadelphiafed.org:443
+The result of the working procedure is a logical link in /etc/ssl/certs to the certificate in /usr/share/ca-certificates/local and the new certificate being added to the trust store.
