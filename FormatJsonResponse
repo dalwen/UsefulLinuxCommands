@@ -1,0 +1,3 @@
+# Tested in raspberry pi
+1. $ curl --location --request GET 'http://localhost/api/settings'| python -m json.tool
+2. $ curl --location --request GET 'http://localhost/api/settings'| json_pp
