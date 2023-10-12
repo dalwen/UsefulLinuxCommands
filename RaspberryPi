@@ -1,0 +1,13 @@
+Raspberry Pi
+To let service start after network available
+sudo systemctl enable NetworkManager-wait-online.service
+sudo systemctl disable systemd-networkd-wait-online.service
+$ sudo systemctl is-enabled NetworkManager-wait-online.service systemd-networkd-wait-online.service
+enabled
+disabled
+
+Then in service:
+[Unit]
+Description=PowerpluttApi
+After=network-online.target
+Wants=network-online.target
